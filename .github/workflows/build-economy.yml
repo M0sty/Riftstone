@@ -1,0 +1,26 @@
+
+name: Build Riftstone Economy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-2022
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Economy plugin
+        shell: cmd
+        working-directory: native/plugins/economy
+        run: build.cmd
+
+      - name: Upload build files
+        uses: actions/upload-artifact@v4
+        with:
+          name: Riftstone-Economy-Build
+          path: native/plugins/economy/out/
+          if-no-files-found: error
+          retention-days: 14
